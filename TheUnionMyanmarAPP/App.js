@@ -6,57 +6,76 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState } from 'react';
-import Login from './components/Login'
+import React from 'react';
 
-import { View, Text, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+import LoginScreen from './components/LoginScreen';
+import SplashScreen from './components/SplashScreen';
+import HomeScreen from './components/HomeScreen';
+
+const Stack = createStackNavigator();
+
+const Auth = () => {
+
+  return (
+    <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      {/* <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{
+          title: 'Register', //Set Header Title
+          headerStyle: {
+            backgroundColor: '#307ecc', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      /> */}
+    </Stack.Navigator>
+  );
+};
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000);
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SplashScreen">
 
-  }, []);
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          // Hiding header for Splash Screen
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          // Hiding header for Splash Screen
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{ headerShown: false }}
+        />
+        
 
-
-  if (isLoading) {
-    return (
-      <View style={Styles.container}>
-        <Text style={Styles.text}>Welcome</Text>
-        <ActivityIndicator />
-      </View >
-    )
-  }
-  else {
-    return (
-      <Login />
-    )
-  }
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 
 }
 
 
-const { height } = Dimensions.get("screen")
-const height_logo = height + 0.28
 
-const Styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#051937",
-    justifyContent: "center",
-    alignItems: "center"
-
-  },
-
-  text: {
-    fontSize: 40,
-    color: "white"
-  }
-
-})
 
 export default App;
 

@@ -1,4 +1,4 @@
-export default Users = [
+const users = [
     {
         id: 1,
         username: "admin",
@@ -6,3 +6,5 @@ export default Users = [
     }
 
 ];
+
+export default users
